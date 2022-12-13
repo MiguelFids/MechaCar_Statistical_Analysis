@@ -4,6 +4,7 @@ data <- read.csv("MechaCar_mpg.csv")
 
 # deliverable 1  
 model <- lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data)
+model
 
 # plot the linear regression lines
 model <- lm(mpg ~ vehicle_length, data)
@@ -29,11 +30,23 @@ lot_summary <- data2 %>% group_by(data2$Manufacturing_Lot) %>%  summarize(Mean=m
 lot_summary
 
 # deliverable 3
-sample_table1 <- data2 %>% sample_n(50)
-sample_table2 <- data2 %>% sample_n(50)
-sample_table3 <- data2 %>% sample_n(50)
 
-t.test(sample_table1$PSI, mu=mean(data2$PSI), subset = Manufacturing_Lot == "Lot 1")
-t.test(sample_table2$PSI, mu=mean(data2$PSI), subset = Manufacturing_Lot == "Lot 2")
-t.test(sample_table3$PSI, mu=mean(data2$PSI), subset = Manufacturing_Lot == "Lot 3")
+lst <- list()
+sample_table <- data2 %>% sample_n(50)
+pop_test <- t.test(sample_table$PSI, mu=mean(data2$PSI))
+lst <- append(lst,pop_test$p.value)
+lst
+
+sample_table1 <- data2 %>% filter(Manufacturing_Lot == 'Lot1') 
+sample_table2 <- data2 %>% filter(Manufacturing_Lot == 'Lot2') 
+sample_table3 <- data2 %>% filter(Manufacturing_Lot == 'Lot3') 
+test1 <- t.test(sample_table1$PSI, data2$PSI)
+test2 <- t.test(sample_table2$PSI, data2$PSI)
+test3 <- t.test(sample_table3$PSI, data2$PSI)
+
+Lot <- c("Lot 1", "Lot 2", "Lot 3")
+P <- c(test1$p.value, test2$p.value, test3$p.value)
+
+df <- data.frame(Lot, P)
+df
 
