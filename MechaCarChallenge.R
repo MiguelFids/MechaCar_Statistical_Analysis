@@ -3,7 +3,23 @@ library(dplyr)
 data <- read.csv("MechaCar_mpg.csv")
 
 # deliverable 1  
-summary(lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data))
+model <- lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data)
+
+# plot the linear regression lines
+model <- lm(mpg ~ vehicle_length, data)
+regression_model <- model$coefficients['vehicle_length']*data$vehicle_length + model$coefficients['(Intercept)']
+plt <- ggplot(data, aes(x=vehicle_length, y=mpg))
+plt + geom_point() + geom_line(aes(y=regression_model))
+
+model <- lm(mpg ~ ground_clearance, data)
+regression_model <- model$coefficients['ground_clearance']*data$ground_clearance + model$coefficients['(Intercept)']
+plt <- ggplot(data, aes(x=ground_clearance, y=mpg))
+plt + geom_point() + geom_line(aes(y=regression_model))
+
+model <- lm(mpg ~ vehicle_weight, data)
+regression_model <- model$coefficients['vehicle_weight']*data$vehicle_weight + model$coefficients['(Intercept)']
+plt <- ggplot(data, aes(x=vehicle_weight, y=mpg))
+plt + geom_point() + geom_line(aes(y=regression_model))
 
 # deliverable 2
 data2 <- read.csv("Suspension_Coil.csv")
