@@ -1,6 +1,6 @@
 library(tidyverse)
 library(dplyr)
-data <- read.csv("MechaCar_mpg.csv")
+data <- read.csv("data/MechaCar_mpg.csv")
 
 # deliverable 1  
 model <- lm(mpg ~ vehicle_length + vehicle_weight + spoiler_angle + ground_clearance + AWD, data)
@@ -23,7 +23,7 @@ plt <- ggplot(data, aes(x=vehicle_weight, y=mpg))
 plt + geom_point() + geom_line(aes(y=regression_model))
 
 # deliverable 2
-data2 <- read.csv("Suspension_Coil.csv")
+data2 <- read.csv("data/Suspension_Coil.csv")
 total_summary <- data2 %>% summarize(Mean=mean(PSI), Median=median(PSI), Variance=var(data2$PSI), Standard_Deviation=sd(data2$PSI))
 total_summary
 lot_summary <- data2 %>% group_by(data2$Manufacturing_Lot) %>%  summarize(Mean=mean(PSI), Median=median(PSI), Variance=var(PSI), SD=sd(PSI))
